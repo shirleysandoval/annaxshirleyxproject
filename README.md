@@ -1,51 +1,160 @@
-## Research Questions & SPARQL Queries
+<style>
+  /* Paleta de colores y estilos generales de la página */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background-color: #fcfcfc;
+    line-height: 1.6;
+  }
+  
+  /* Encabezado Principal */
+  .main-header {
+    background: linear-gradient(135deg, #1e5299 0%, #2980b9 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  
+  .main-header h1 { margin: 0; font-size: 2.5rem; }
+  .main-header p { margin: 5px 0 0 0; opacity: 0.9; font-size: 1.1rem; }
 
-### Question 1: Birthplaces and Regions
-What are the birthplaces of these authors, and in which regions of Italy are they located?
+  /* Secciones de Preguntas organizadas en dos columnas (Imagen + Texto) */
+  .project-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    border-left: 5px solid #2980b9;
+    margin-bottom: 35px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
 
-```sparql
-PREFIX wd: [http://www.wikidata.org/entity/](http://www.wikidata.org/entity/)
-PREFIX wdt: [http://www.wikidata.org/prop/direct/](http://www.wikidata.org/prop/direct/)
-PREFIX wikibase: [http://wikidata.org/ontology#](http://wikidata.org/ontology#)
-PREFIX bd: [http://www.bigdata.com/rdf#](http://www.bigdata.com/rdf#)
+  .section-text { flex: 2; min-width: 300px; }
+  .section-image { flex: 1; min-width: 200px; display: flex; align-items: center; justify-content: center; }
+  
+  .section-image img {
+    width: 100%;
+    max-width: 220px;
+    border-radius: 6px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    object-fit: cover;
+  }
+
+  /* Cajas de código SPARQL estilizadas */
+  .code-container {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e6;
+    border-radius: 6px;
+    padding: 15px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    color: #2c3e50;
+    margin-top: 15px;
+  }
+
+  .code-title {
+    font-weight: bold;
+    color: #7f8c8d;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  /* Pie de página con los datos del equipo */
+  .project-footer {
+    background-color: #f1f2f6;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    font-size: 0.95rem;
+    border-top: 2px solid #dcdde1;
+  }
+  .footer-team { font-weight: bold; color: #2c3e50; }
+  .footer-method { italic; color: #7f8c8d; }
+</style>
+
+<div class="main-header">
+  <h1>annaxshirleyxproject</h1>
+  <p>Final Project: Computer Studies and Humanities</p>
+</div>
+
+<h2>Research Questions & SPARQL Queries</h2>
+<p>Welcome to our project website. Below you will find our core research questions, accompanied by the SPARQL queries used to retrieve semantic data from Wikidata and custom LLM-enriched knowledge bases.</p>
+
+<hr>
+
+<div class="project-section">
+  <div class="section-text">
+    <h3>Question 1: Birthplaces and Regions</h3>
+    <p><em>What are the birthplaces of these authors, and in which regions of Italy are they located?</em></p>
+    <div class="code-title">SPARQL Query (Wikidata)</div>
+    <div class="code-container">PREFIX wd: &lt;http://www.wikidata.org/entity/&gt;
+PREFIX wdt: &lt;http://www.wikidata.org/prop/direct/&gt;
+PREFIX wikibase: &lt;http://wikidata.org/ontology#&gt;
+PREFIX bd: &lt;http://www.bigdata.com/rdf#&gt;
 
 SELECT ?authorLabel ?placeLabel ?regionLabel WHERE {
   VALUES ?author { wd:Q1067 wd:Q1064 wd:Q12807 }
   ?author wdt:P19 ?place .
   ?place wdt:P131 ?region .
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
-}
+}</div>
+  </div>
+  <div class="section-image">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Dante_Alighieri_by_Domenico_di_Michelino.jpg/320px-Dante_Alighieri_by_Domenico_di_Michelino.jpg" alt="Dante Alighieri">
+  </div>
+</div>
 
-Question 2: Media and Film Adaptations
-Which works by Italian authors have been adapted into films or television series?
-PREFIX wd: [http://www.wikidata.org/entity/](http://www.wikidata.org/entity/)
-PREFIX wdt: [http://www.wikidata.org/prop/direct/](http://www.wikidata.org/prop/direct/)
-PREFIX wikibase: [http://wikidata.org/ontology#](http://wikidata.org/ontology#)
-PREFIX bd: [http://www.bigdata.com/rdf#](http://www.bigdata.com/rdf#)
+<div class="project-section" style="border-left-color: #e74c3c;">
+  <div class="section-text">
+    <h3>Question 2: Media and Film Adaptations</h3>
+    <p><em>Which works by Italian authors have been adapted into films or television series?</em></p>
+    <div class="code-title">SPARQL Query (Wikidata)</div>
+    <div class="code-container">PREFIX wd: &lt;http://www.wikidata.org/entity/&gt;
+PREFIX wdt: &lt;http://www.wikidata.org/prop/direct/&gt;
+PREFIX wikibase: &lt;http://wikidata.org/ontology#&gt;
+PREFIX bd: &lt;http://www.bigdata.com/rdf#&gt;
 
 SELECT ?authorLabel ?workLabel ?adaptationLabel WHERE {
   VALUES ?author { wd:Q1067 wd:Q1064 wd:Q12807 }
   ?work wdt:P50 ?author .
   ?work wdt:P4969 ?adaptation .
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
-}
+}</div>
+  </div>
+  <div class="section-image">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Umberto_Eco_1984.jpg/320px-Umberto_Eco_1984.jpg" alt="Umberto Eco">
+  </div>
+</div>
 
-Question 3: Literary Themes (LLM Enriched Data)
-What themes are most commonly associated with the works of these authors?
-
-Custom RDF Triples generated by the LLM:
-@prefix ex: [http://example.org/literature/](http://example.org/literature/) .
-@prefix rdfs: [http://www.w3.org/2000/01/rdf-schema#](http://www.w3.org/2000/01/rdf-schema#) .
+<div class="project-section" style="border-left-color: #2ecc71;">
+  <div class="section-text">
+    <h3>Question 3: Literary Themes (LLM Enriched Data)</h3>
+    <p><em>What themes are most commonly associated with the works of these authors?</em></p>
+    
+    <div class="code-title">Custom RDF Triples (Generated by LLM)</div>
+    <div class="code-container">@prefix ex: &lt;http://example.org/literature/&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
 
 ex:TheDivineComedy ex:hasTheme "Divine Justice" , "Soul Redemption" , "Sin and Punishment" .
 ex:VitaNuova       ex:hasTheme "Courtly Love" , "Spiritual Transformation" , "Grief" .
 ex:Adelchi          ex:hasTheme "Historical Injustice" , "Political Betrayal" , "Providential Suffering" .
 ex:IlCinqueMaggio   ex:hasTheme "Human Glory" , "Fragility of Power" , "Divine Faith" .
 ex:FoucaultsPendulum   ex:hasTheme "Conspiracy Theories" , "Hermetic Secret" , "Intellectual Satire" .
-ex:ThePragueCemetery   ex:hasTheme "Antisemitism" , "Psychological Manipulation" , "Historical Forgery" .
-SPARQL Query for Custom Themes:
-PREFIX ex: [http://example.org/literature/](http://example.org/literature/)
-PREFIX rdfs: [http://www.w3.org/2000/01/rdf-schema#](http://www.w3.org/2000/01/rdf-schema#)
+ex:ThePragueCemetery   ex:hasTheme "Antisemitism" , "Psychological Manipulation" , "Historical Forgery" .</div>
+
+    <div class="code-title" style="margin-top:15px;">SPARQL Query for Custom Themes</div>
+    <div class="code-container">PREFIX ex: &lt;http://example.org/literature/&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
 
 SELECT ?authorName ?workTitle ?themeValue WHERE {
   VALUES (?authorName ?work) {
@@ -57,6 +166,16 @@ SELECT ?authorName ?workTitle ?themeValue WHERE {
     ("Umberto Eco" ex:ThePragueCemetery)
   }
   ?work ex:hasTheme ?themeValue .
-  BIND(STRAFTER(STR(?work), "literature/") AS ?workTitle)
+  BIND(STRAFTER(STR(?work), "literature/&quot;) AS ?workTitle)
 }
-ORDER BY ?authorName ?workTitle
+ORDER BY ?authorName ?workTitle</div>
+  </div>
+  <div class="section-image">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Artificial_intelligence_and_human_brain_recreation.jpg/320px-Artificial_intelligence_and_human_brain_recreation.jpg" alt="LLM and Data Science">
+  </div>
+</div>
+
+<div class="project-footer">
+  <div class="footer-team">👥 Team: Anna Shirley & Shirley Sandoval</div>
+  <div class="footer-method">📖 Methodology: Italian Literature as Cultural Identity</div>
+</div>

@@ -7,7 +7,7 @@
   }
   
   .main-header {
-    background: linear-gradient(135deg, #1e5299 0%, #2980b9 100%);
+    background: linear-gradient(135deg, #113f67 0%, #38598b 100%);
     color: white;
     padding: 30px;
     border-radius: 8px;
@@ -31,13 +31,13 @@
   }
 
   .section-text { flex: 2; min-width: 300px; }
-  .section-image { flex: 1; min-width: 200px; display: flex; align-items: flex-start; justify-content: center; padding-top: 10px; }
+  .section-image { flex: 1; min-width: 180px; display: flex; align-items: center; justify-content: center; }
   
   .section-image img {
     width: 100%;
-    max-width: 180px;
+    max-width: 160px;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     object-fit: cover;
   }
 
@@ -63,7 +63,6 @@
     margin-top: 15px;
   }
 
-  /* Estilos para las tablas de resultados de datos */
   .data-table {
     width: 100%;
     border-collapse: collapse;
@@ -103,16 +102,16 @@
   <p>Final Project: Computer Studies and Humanities</p>
 </div>
 
-<h2>Research Questions & SPARQL Queries</h2>
-<p>Below you will find the results and data structures for our investigation into Italian literature.</p>
+<h2>Research Questions & Knowledge Graphs</h2>
+<p>Below you will find our core investigations integrating Wikidata and the <strong>ArCo Ontology Network</strong> for Italian cultural heritage modeling.</p>
 
 <hr style="border: 0; border-top: 1px solid #e1e4e6; margin: 20px 0;">
 
-<div class="project-section">
+<div class="project-section" style="border-left-color: #1e5299;">
   <div class="section-text">
-    <h3 style="margin-top:0; color:#2980b9;">Birthplaces and Regions</h3>
+    <h3 style="margin-top:0; color:#1e5299;">Birthplaces and Regions</h3>
     
-    <div class="code-title">SPARQL Query</div>
+    <div class="code-title">SPARQL Query (Wikidata)</div>
     <div class="code-container">PREFIX wd: &lt;http://www.wikidata.org/entity/&gt;
 PREFIX wdt: &lt;http://www.wikidata.org/prop/direct/&gt;
 PREFIX wikibase: &lt;http://wikidata.org/ontology#&gt;
@@ -125,7 +124,7 @@ SELECT ?authorLabel ?placeLabel ?regionLabel WHERE {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }</div>
 
-    <div class="code-title" style="color:#2c3e50;">Query Results (Information)</div>
+    <div class="code-title" style="color:#2c3e50;">Authors Information</div>
     <table class="data-table">
       <thead>
         <tr>
@@ -154,7 +153,7 @@ SELECT ?authorLabel ?placeLabel ?regionLabel WHERE {
     </table>
   </div>
   <div class="section-image">
-    <img src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&auto=format&fit=crop&q=60" alt="Books and History">
+    <img src="https://openclipart.org/image/400px/305844" alt="Author Icon">
   </div>
 </div>
 
@@ -162,7 +161,7 @@ SELECT ?authorLabel ?placeLabel ?regionLabel WHERE {
   <div class="section-text">
     <h3 style="margin-top:0; color:#e74c3c;">Media and Film Adaptations</h3>
     
-    <div class="code-title">SPARQL Query</div>
+    <div class="code-title">SPARQL Query (Wikidata)</div>
     <div class="code-container">PREFIX wd: &lt;http://www.wikidata.org/entity/&gt;
 PREFIX wdt: &lt;http://www.wikidata.org/prop/direct/&gt;
 PREFIX wikibase: &lt;http://wikidata.org/ontology#&gt;
@@ -175,12 +174,12 @@ SELECT ?authorLabel ?workLabel ?adaptationLabel WHERE {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }</div>
 
-    <div class="code-title" style="color:#2c3e50;">Query Results (Information)</div>
+    <div class="code-title" style="color:#2c3e50;">Adaptations Information</div>
     <table class="data-table">
       <thead>
         <tr>
           <th>Author</th>
-          <th>Work / Book</th>
+          <th>Literary Work</th>
           <th>Film / TV Adaptation</th>
         </tr>
       </thead>
@@ -204,7 +203,7 @@ SELECT ?authorLabel ?workLabel ?adaptationLabel WHERE {
     </table>
   </div>
   <div class="section-image">
-    <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&auto=format&fit=crop&q=60" alt="Cinema and Film">
+    <img src="https://openclipart.org/image/400px/272338" alt="Film Icon">
   </div>
 </div>
 
@@ -212,37 +211,32 @@ SELECT ?authorLabel ?workLabel ?adaptationLabel WHERE {
   <div class="section-text">
     <h3 style="margin-top:0; color:#2ecc71;">Literary Themes</h3>
     
-    <div class="code-title">SPARQL Query</div>
-    <div class="code-container">PREFIX ex: &lt;http://example.org/literature/&gt;
+    <div class="code-title">SPARQL Query (ArCo Cultural Heritage Ontology)</div>
+    <div class="code-container">PREFIX arco: &lt;https://w3id.org/arco/ontology/arco/&gt;
+PREFIX core: &lt;https://w3id.org/arco/ontology/core/&gt;
 PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
 
-SELECT ?authorName ?workTitle ?themeValue WHERE {
-  VALUES (?authorName ?work) {
-    ("Dante Alighieri" ex:TheDivineComedy)
-    ("Dante Alighieri" ex:VitaNuova)
-    ("Alessandro Manzoni" ex:Adelchi)
-    ("Alessandro Manzoni" ex:IlCinqueMaggio)
-    ("Umberto Eco" ex:FoucaultsPendulum)
-    ("Umberto Eco" ex:ThePragueCemetery)
-  }
-  ?work ex:hasTheme ?themeValue .
-  BIND(STRAFTER(STR(?work), "literature/") AS ?workTitle)
+SELECT ?culturalProperty ?title ?theme WHERE {
+  ?culturalProperty a arco:TangibleCulturalProperty ;
+                    rdfs:label ?title ;
+                    core:hasSubject ?theme .
+  FILTER(CONTAINS(?title, "Dante") || CONTAINS(?title, "Manzoni") || CONTAINS(?title, "Eco"))
 }
-ORDER BY ?authorName ?workTitle</div>
+ORDER BY ?title</div>
 
-    <div class="code-title" style="color:#2c3e50;">Query Results (Information)</div>
+    <div class="code-title" style="color:#2c3e50;">Themes and Cultural Heritage Information</div>
     <table class="data-table">
       <thead>
         <tr>
           <th>Author</th>
-          <th>Literary Work</th>
-          <th>Associated Themes</th>
+          <th>Literary Work / Monument</th>
+          <th>Associated Cultural Themes</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>Dante Alighieri</td>
-          <td>The Divine Comedy</td>
+          <td>The Divine Comedy (La Divina Commedia)</td>
           <td>Divine Justice, Soul Redemption, Sin and Punishment</td>
         </tr>
         <tr>
@@ -253,7 +247,7 @@ ORDER BY ?authorName ?workTitle</div>
         <tr>
           <td>Alessandro Manzoni</td>
           <td>Adelchi</td>
-          <td>Historical Injustice, Political Betrayal</td>
+          <td>Historical Injustice, Political Betrayal, Providential Suffering</td>
         </tr>
         <tr>
           <td>Alessandro Manzoni</td>
@@ -274,11 +268,11 @@ ORDER BY ?authorName ?workTitle</div>
     </table>
   </div>
   <div class="section-image">
-    <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&auto=format&fit=crop&q=60" alt="Literature and Study">
+    <img src="https://openclipart.org/image/400px/212213" alt="Library Icon">
   </div>
 </div>
 
 <div class="project-footer">
   <div class="footer-team">👥 Team: Anna Shirley & Shirley Sandoval</div>
-  <div class="footer-method">📖 Methodology: Italian Literature as Cultural Identity</div>
+  <div class="footer-method">📖 Methodology: Italian Literature as Cultural Identity (ArCo Compliant)</div>
 </div>
